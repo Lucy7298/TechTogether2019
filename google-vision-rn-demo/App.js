@@ -285,7 +285,7 @@ async function uploadImageAsync(uri) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
+		backgroundColor: '#6CF4FA',
 		paddingBottom: 10
 	},
 	developmentModeText: {
