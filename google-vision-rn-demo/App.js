@@ -30,7 +30,6 @@ export default class App extends React.Component {
 
 	render() {
 		let { image } = this.state;
-
 		return (
 			<View style={styles.container}>
 				<ScrollView
@@ -283,7 +282,7 @@ async function uploadImageAsync(uri) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
+		backgroundColor: '#6CF4FA',
 		paddingBottom: 10
 	},
 	developmentModeText: {
