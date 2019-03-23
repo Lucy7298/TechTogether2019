@@ -15,6 +15,7 @@ import { ImagePicker, Permissions } from 'expo';
 import uuid from 'uuid';
 import Environment from './config/environment';
 import firebase from './config/firebase';
+//import { debug } from 'util';
 
 export default class App extends React.Component {
 	state = {
@@ -24,12 +25,27 @@ export default class App extends React.Component {
 	};
 
 	async componentDidMount() {
+		console.log(firebase); 
+		console.log("here"); 
 		await Permissions.askAsync(Permissions.CAMERA_ROLL);
 		await Permissions.askAsync(Permissions.CAMERA);
 	}
 
 	render() {
 		let { image } = this.state;
+		var query = firebase.database().ref("safethings"); 
+		query.once("value")
+		  .then(function(snapshot) {
+			snapshot.forEach(function(childSnapshot) {
+			  // key will be "ada" the first time and "alan" the second time
+			  var key = childSnapshot.key;
+			  console.log(key); 
+			  // childData will be the actual contents of the child
+			  var childData = childSnapshot.val();
+			  console.log(childData); 
+		  });
+		});
+
 		return (
 			<View style={styles.container}>
 				<ScrollView
@@ -50,12 +66,7 @@ export default class App extends React.Component {
 
 						<Button onPress={this._takePhoto} title="Take a photo" />
 						{this.state.googleResponse && (
-							<FlatList
-								data={this.state.googleResponse.responses[0].labelAnnotations}
-								extraData={this.state}
-								keyExtractor={this._keyExtractor}
-								renderItem={({ item }) => <Text>Item: {item.description}</Text>}
-							/>
+							<Text>Item: {this.state.googleResponse.responses[0].fullTextAnnotation.text}</Text>
 						)}
 						{this._maybeRenderImage()}
 						{this._maybeRenderUploadingOverlay()}
@@ -210,16 +221,7 @@ export default class App extends React.Component {
 				requests: [
 					{
 						features: [
-							{ type: 'LABEL_DETECTION', maxResults: 10 },
-							{ type: 'LANDMARK_DETECTION', maxResults: 5 },
-							{ type: 'FACE_DETECTION', maxResults: 5 },
-							{ type: 'LOGO_DETECTION', maxResults: 5 },
-							{ type: 'TEXT_DETECTION', maxResults: 5 },
-							{ type: 'DOCUMENT_TEXT_DETECTION', maxResults: 5 },
-							{ type: 'SAFE_SEARCH_DETECTION', maxResults: 5 },
-							{ type: 'IMAGE_PROPERTIES', maxResults: 5 },
-							{ type: 'CROP_HINTS', maxResults: 5 },
-							{ type: 'WEB_DETECTION', maxResults: 5 }
+							{ type: 'TEXT_DETECTION', maxResults: 1 }
 						],
 						image: {
 							source: {
@@ -242,7 +244,8 @@ export default class App extends React.Component {
 				}
 			);
 			let responseJson = await response.json();
-			console.log(responseJson["labelAnnotations"]);
+			let testObj = responseJson.responses[0].fullTextAnnotation.text;
+			console.log(testObj);
 			this.setState({
 				googleResponse: responseJson,
 				uploading: false
