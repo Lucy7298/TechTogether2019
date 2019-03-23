@@ -15,6 +15,7 @@ import { ImagePicker, Permissions } from 'expo';
 import uuid from 'uuid';
 import Environment from './config/environment';
 import firebase from './config/firebase';
+//import { debug } from 'util';
 
 export default class App extends React.Component {
 	state = {
@@ -24,12 +25,26 @@ export default class App extends React.Component {
 	};
 
 	async componentDidMount() {
+		console.log(firebase); 
+		console.log("here"); 
 		await Permissions.askAsync(Permissions.CAMERA_ROLL);
 		await Permissions.askAsync(Permissions.CAMERA);
 	}
 
 	render() {
 		let { image } = this.state;
+		var query = firebase.database().ref("safethings"); 
+		query.once("value")
+		  .then(function(snapshot) {
+			snapshot.forEach(function(childSnapshot) {
+			  // key will be "ada" the first time and "alan" the second time
+			  var key = childSnapshot.key;
+			  console.log(key); 
+			  // childData will be the actual contents of the child
+			  var childData = childSnapshot.val();
+			  console.log(childData); 
+		  });
+		});
 
 		return (
 			<View style={styles.container}>
@@ -244,6 +259,7 @@ export default class App extends React.Component {
 			);
 			let responseJson = await response.json();
 			console.log(responseJson["labelAnnotations"]);
+
 			this.setState({
 				googleResponse: responseJson,
 				uploading: false
