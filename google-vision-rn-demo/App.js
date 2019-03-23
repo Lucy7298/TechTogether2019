@@ -51,12 +51,7 @@ export default class App extends React.Component {
 
 						<Button onPress={this._takePhoto} title="Take a photo" />
 						{this.state.googleResponse && (
-							<FlatList
-								data={this.state.googleResponse.responses[0].labelAnnotations}
-								extraData={this.state}
-								keyExtractor={this._keyExtractor}
-								renderItem={({ item }) => <Text>Item: {item.description}</Text>}
-							/>
+							<Text>Item: {this.state.googleResponse.responses[0].fullTextAnnotation.text}</Text>
 						)}
 						{this._maybeRenderImage()}
 						{this._maybeRenderUploadingOverlay()}
@@ -211,16 +206,7 @@ export default class App extends React.Component {
 				requests: [
 					{
 						features: [
-							{ type: 'LABEL_DETECTION', maxResults: 10 },
-							{ type: 'LANDMARK_DETECTION', maxResults: 5 },
-							{ type: 'FACE_DETECTION', maxResults: 5 },
-							{ type: 'LOGO_DETECTION', maxResults: 5 },
-							{ type: 'TEXT_DETECTION', maxResults: 5 },
-							{ type: 'DOCUMENT_TEXT_DETECTION', maxResults: 5 },
-							{ type: 'SAFE_SEARCH_DETECTION', maxResults: 5 },
-							{ type: 'IMAGE_PROPERTIES', maxResults: 5 },
-							{ type: 'CROP_HINTS', maxResults: 5 },
-							{ type: 'WEB_DETECTION', maxResults: 5 }
+							{ type: 'TEXT_DETECTION', maxResults: 1 }
 						],
 						image: {
 							source: {
@@ -243,7 +229,8 @@ export default class App extends React.Component {
 				}
 			);
 			let responseJson = await response.json();
-			console.log(responseJson["labelAnnotations"]);
+			let testObj = responseJson.responses[0].fullTextAnnotation.text;
+			console.log(testObj);
 			this.setState({
 				googleResponse: responseJson,
 				uploading: false
