@@ -76,7 +76,7 @@ export default class App extends React.Component {
 		if (array != null){
 			return array.map(function(item, i) {
 				return (
-					<Text key = {i}>{item}</Text>
+					<Text style={styles.getStartedText}key = {i}>{item}</Text>
 				);
 			});
 		}
@@ -142,7 +142,7 @@ export default class App extends React.Component {
 				/>
 
 				{googleResponse && (
-					<View>
+					<View style={styles.developmentModeText}>
 						{this.organize(googleResponse)}
 					</View>
 				)}
