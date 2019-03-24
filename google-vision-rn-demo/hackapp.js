@@ -27,6 +27,13 @@ function match(str){
             snapshot.forEach(function(childSnapshot) {
               var key = childSnapshot.key;
               var childData = childSnapshot.val();
+              var p = strarray[i].index("#"); 
+              if (p != -1) {
+                  var a = strarray[i].substring(0, p);
+                  var b = strarray[i].substring(p+1, len(strarray[i])); 
+                  strarray[i] =  a + b; 
+                  console.log(strarray[i]);
+              }
               if(strarray[i]===key){
                   console.log("working");
                   newarray[i]=key;
