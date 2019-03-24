@@ -1,9 +1,9 @@
 {
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://9t-p9p.anonymous.google-vision-rn-demo.exp.direct",
+  "packagerNgrokUrl": "https://packager.9t-p9p.anonymous.google-vision-rn-demo.exp.direct",
+  "ngrokPid": 7160,
   "devToolsPort": 19002,
   "expoServerPort": null,
   "webpackServerPort": null

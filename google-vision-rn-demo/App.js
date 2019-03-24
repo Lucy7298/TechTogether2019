@@ -46,7 +46,8 @@ export default class App extends React.Component {
 				>
 					<View style={styles.getStartedContainer}>
 						{image ? null : (
-							<Text style={styles.getStartedText}>Google Cloud Vision</Text>
+							<Text style={styles.getStartedText}>Healthy Vision</Text>
+							<Text style={styles.getStartedText}>What will you eat today?</Text>
 						)}
 					</View>
 
