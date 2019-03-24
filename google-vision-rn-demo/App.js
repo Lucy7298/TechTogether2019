@@ -32,6 +32,8 @@ export default class App extends React.Component {
 	}
 
 	render() {
+		
+		console.log(firebase.database().toJSON()); 
 		let { image } = this.state;
 		var query = firebase.database().ref("safethings"); 
 		query.once("value")
