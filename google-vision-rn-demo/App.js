@@ -51,15 +51,18 @@ export default class App extends React.Component {
 					</View>
 
 					<View style={styles.helpContainer}>
+						<View style={styles.helpContainer}>
 						<Button
 							onPress={this._pickImage}
 							title="Pick an image from camera roll"
 						/>
-						<p> </p>	
-						<Button onPress={this._takePhoto} title="Take a photo" />
-						{console.log("hello")} 
+						</View>
+
+						<View style={styles.helpContainer}>
+						<Button onPress={this._takePhoto} title="Take a photo" /> 
 						{this._maybeRenderImage()}
 						{this._maybeRenderUploadingOverlay()}
+						</View>
 					</View>
 				</ScrollView>
 			</View>
