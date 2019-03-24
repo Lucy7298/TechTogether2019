@@ -15,6 +15,7 @@ import { ImagePicker, Permissions } from 'expo';
 import uuid from 'uuid';
 import Environment from './config/environment';
 import firebase from './config/firebase';
+import match from './hackapp';
 //import { debug } from 'util';
 
 export default class App extends React.Component {
@@ -33,18 +34,8 @@ export default class App extends React.Component {
 
 	render() {
 		let { image } = this.state;
-		var query = firebase.database().ref("safethings"); 
-		query.once("value")
-		  .then(function(snapshot) {
-			snapshot.forEach(function(childSnapshot) {
-			  // key will be "ada" the first time and "alan" the second time
-			  var key = childSnapshot.key;
-			  console.log(key); 
-			  // childData will be the actual contents of the child
-			  var childData = childSnapshot.val();
-			  console.log(childData); 
-		  });
-		});
+		
+		
 
 		return (
 			<View style={styles.container}>
@@ -66,7 +57,12 @@ export default class App extends React.Component {
 
 						<Button onPress={this._takePhoto} title="Take a photo" />
 						{this.state.googleResponse && (
-							<Text>Item: {this.state.googleResponse.responses[0].fullTextAnnotation.text}</Text>
+							<FlatList
+							data={this.state.googleResponse}
+							extraData={this.state}
+							renderItem={({ item }) => <Text>Item: {item}</Text>}
+						/>
+
 						)}
 						{this._maybeRenderImage()}
 						{this._maybeRenderUploadingOverlay()}
@@ -245,9 +241,10 @@ export default class App extends React.Component {
 			);
 			let responseJson = await response.json();
 			let testObj = responseJson.responses[0].fullTextAnnotation.text;
+			newarray=match(testObj);
 			console.log(testObj);
 			this.setState({
-				googleResponse: responseJson,
+				googleResponse: newarray,
 				uploading: false
 			});
 		} catch (error) {
@@ -255,6 +252,8 @@ export default class App extends React.Component {
 		}
 	};
 }
+
+
 
 async function uploadImageAsync(uri) {
 	const blob = await new Promise((resolve, reject) => {
