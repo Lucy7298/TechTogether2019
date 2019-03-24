@@ -32,14 +32,12 @@ function match(str){
                   newarray[i]=key;
                   count++;
               }
-              console.log(key);
-              console.log("hi");
           });
         });
         }
 
     if(count===0){
-        console.log("Safe to Eat! Enjoy!"); //if no matches are found
+        newarray[0] = "Safe to Eat! Enjoy!"; //if no matches are found
     }
     return newarray;
 }
