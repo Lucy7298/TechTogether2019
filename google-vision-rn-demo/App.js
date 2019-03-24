@@ -234,13 +234,24 @@ export default class App extends React.Component {
 				}
 			);
 			let responseJson = await response.json();
-			let testObj = responseJson.responses[0].fullTextAnnotation.text;
-			newarray=match(testObj);
-			console.log(testObj);
-			this.setState({
-				googleResponse: newarray,
-				uploading: false
-			});
+			testObj = responseJson.responses[0].fullTextAnnotation.text;
+			var promise1 = new Promise(function(resolve, reject) {
+				console.log('ayyyyyyyy'); 
+				let a = match(testObj);
+				console.log("back here"); 
+				console.log(a); 
+				resolve(a);  
+			  });
+			promise1.then(
+				(res) => {
+					console.log("meowmeow"); 
+					console.log(res);
+					this.setState({
+						googleResponse: res,
+						uploading: false
+					});
+				}, (err) => {console.log(err); }
+			)
 		} catch (error) {
 			console.log(error);
 		}

@@ -7,46 +7,63 @@
 import Environment from './config/environment';
 import firebase from './config/firebase';
 
-function match(str){
-    //foodData will be the dataset
-    var count=0;
-    var newarray=[];
-    //str will be a string of 
-    var strarray=str.split(","); //separates each string into index
-    for (var i=0;i<strarray.length;i++){ //check for strarray[i] in database str2
 
-        //for (var j in foodData){
-        //    if (strarray[i]===j){
-        //        //retrieve info about foodData[j]
-        //        newarray[i]=foodData[j];
-        //       count++;
-        //    }
-        var query = firebase.database().ref().orderByKey();
-        query.once("value")
-          .then(function(snapshot) {
-            snapshot.forEach(function(childSnapshot) {
-              var key = childSnapshot.key;
-              var childData = childSnapshot.val();
-              var p = strarray[i].index("#"); 
-              if (p != -1) {
-                  var a = strarray[i].substring(0, p);
-                  var b = strarray[i].substring(p+1, len(strarray[i])); 
-                  strarray[i] =  a + b; 
-                  console.log(strarray[i]);
-              }
-              if(strarray[i]===key){
-                  console.log("working");
-                  newarray[i]=key;
-                  count++;
-              }
-          });
-        });
+function match (mystr) {
+    console.log('hi'); 
+    var o = new Object(); 
+    var promise1 = new Promise(function(resolve, reject) {
+        console.log('here'); 
+        resolve(mystr.split(", ")); 
+      });
+    return promise1.then ((resArray) => {for (i = 0; i < resArray.length; i++){
+        console.log('lala'); 
+        resArray[i] = resArray[i].replace(/[^a-zA-Z0-9À-ž\s]/g, ""); 
+        resArray[i] = resArray[i].replace(/(\r\n|\n|\r)/gm, "");
+        resArray[i] = resArray[i].toLowerCase(); 
         }
-
-    if(count===0){
-        newarray[0] = "Safe to Eat! Enjoy!"; //if no matches are found
-    }
-    return newarray;
+        console.log(resArray); 
+        return resArray }, 
+            (err) => {console.log(err); })
+    .then (res => {
+        var o = new Object(); 
+        for (i = 0; i<res.length; i++){
+            o[res[i]] = true; 
+        }
+        console.log(o);  
+        return o; 
+    }).then(obj => {
+        console.log("nearly there!"); 
+        return getNearbyPosts(obj); 
+    }); 
 }
+
+getNearbyPosts = function (object){
+    console.log(object); 
+    var query = firebase.database().ref().orderByKey();
+    var listOfItems = [];
+    
+    // We return the promise created by query.once
+    return query.once("value").then((snapshot) => {
+    
+      // our inital .then will do some data filtering
+      snapshot.forEach((childSnapshot) => {
+        var key = childSnapshot.key;
+        var childData = childSnapshot.val();
+        console.log(object[key]); 
+        if(object[key] == true){
+          listOfItems.push(childSnapshot.key);
+        }
+      });
+      if (listOfItems.length == 0) {
+          return ["Safe to eat!"]; 
+      }
+      console.log("complete"); 
+      console.log(listOfItems); 
+      // We return here to continue the chain. The next .then that picks this up will have this result
+      return listOfItems;
+    });
+  }
+  
+
 
 export default match;
