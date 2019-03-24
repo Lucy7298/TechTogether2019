@@ -54,7 +54,7 @@ export default class App extends React.Component {
 							onPress={this._pickImage}
 							title="Pick an image from camera roll"
 						/>
-
+						<p> </p>	
 						<Button onPress={this._takePhoto} title="Take a photo" />
 						{this.state.googleResponse && (
 							<FlatList
@@ -284,7 +284,7 @@ async function uploadImageAsync(uri) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#6CF4FA',
+		backgroundColor: "#F49EEB",
 		paddingBottom: 10
 	},
 	developmentModeText: {
@@ -312,6 +312,7 @@ const styles = StyleSheet.create({
 
 	helpContainer: {
 		marginTop: 15,
+		marginBottom: 15,
 		alignItems: 'center'
 	}
 });
