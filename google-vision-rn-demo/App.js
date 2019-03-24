@@ -34,7 +34,6 @@ export default class App extends React.Component {
 
 	render() {
 		
-		console.log(firebase.database().toJSON()); 
 		let { image } = this.state;
 		
 		
@@ -58,14 +57,7 @@ export default class App extends React.Component {
 						/>
 
 						<Button onPress={this._takePhoto} title="Take a photo" />
-						{this.state.googleResponse && (
-							<FlatList
-							data={this.state.googleResponse}
-							extraData={this.state}
-							renderItem={({ item }) => <Text>Item: {item}</Text>}
-						/>
-
-						)}
+						{console.log("hello")} 
 						{this._maybeRenderImage()}
 						{this._maybeRenderUploadingOverlay()}
 					</View>
@@ -75,13 +67,13 @@ export default class App extends React.Component {
 	}
 
 	organize = array => {
-		return array.map(function(item, i) {
-			return (
-				<View key={i}>
-					<Text>{item}</Text>
-				</View>
-			);
-		});
+		if (array != null){
+			return array.map(function(item, i) {
+				return (
+					<Text key = {i}>{item}</Text>
+				);
+			});
+		}
 	};
 
 	_maybeRenderUploadingOverlay = () => {
@@ -143,16 +135,10 @@ export default class App extends React.Component {
 					style={{ paddingVertical: 10, paddingHorizontal: 10 }}
 				/>
 
-				<Text>Raw JSON:</Text>
-
 				{googleResponse && (
-					<Text
-						onPress={this._copyToClipboard}
-						onLongPress={this._share}
-						style={{ paddingVertical: 10, paddingHorizontal: 10 }}
-					>
-						JSON.stringify(googleResponse.responses)}
-					</Text>
+					<View>
+						{this.organize(googleResponse)}
+					</View>
 				)}
 			</View>
 		);
