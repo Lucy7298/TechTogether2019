@@ -46,8 +46,10 @@ export default class App extends React.Component {
 				>
 					<View style={styles.getStartedContainer}>
 						{image ? null : (
-							<Text style={styles.getStartedText}>Healthy Vision</Text>
-							<Text style={styles.getStartedText}>What will you eat today?</Text>
+							<View>
+								<Text style={styles.getStartedText}>Healthy Vision</Text>
+								<Text style={styles.getStartedText}>What will you eat today?</Text>
+							</View>
 						)}
 					</View>
 
@@ -56,7 +58,6 @@ export default class App extends React.Component {
 							onPress={this._pickImage}
 							title="Pick an image from camera roll"
 						/>
-						<p> </p>	
 						<Button onPress={this._takePhoto} title="Take a photo" />
 						{console.log("hello")} 
 						{this._maybeRenderImage()}
