@@ -1,9 +1,14 @@
 {
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "packagerPort": 19001,
+  "packagerPid": 6200,
+  "expoServerNgrokUrl": "https://ze-pj2.anonymous.google-vision-rn-demo.exp.direct",
+  "packagerNgrokUrl": "https://packager.ze-pj2.anonymous.google-vision-rn-demo.exp.direct",
+  "ngrokPid": 17428,
   "devToolsPort": 19002,
+<<<<<<< HEAD
   "expoServerPort": null
+=======
+  "expoServerPort": 19000,
+  "webpackServerPort": null
+>>>>>>> c40398f3365f2a50715f6b0798ed67d5b285fc04
 }
